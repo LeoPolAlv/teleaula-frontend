@@ -1,0 +1,232 @@
+<div>
+    <h4>FORMULARIO <small> Nueva Matricula </small></h4>
+    <hr>
+    <form autocomplete="off" [formGroup]="forma" (ngSubmit)="guardar()">
+        <div class="form-group row mt-3">
+            <label class="col-2 col-form-label">Nombre</label>
+            <div class="col">
+
+                <input class="form-control" type="text" placeholder="Nombre" formControlName="nombre" [class.is-invalid]="campoValido('nombre')">
+                <small *ngIf="campoValido('nombre')" class="text-danger">
+                Informe un nombre correcto
+            </small>
+            </div>
+        </div>
+        <div class="form-group row mt-3">
+            <label class="col-2 col-form-label">Apellidos</label>
+            <div class="col">
+
+                <input class="form-control" type="text" placeholder="Apellidos" formControlName="apellido" [class.is-invalid]="campoValido('apellido')">
+                <small *ngIf="campoValido('apellido')" class="text-danger">
+                Informe un apellido correcto
+            </small>
+            </div>
+        </div>
+
+        <div class="form-group row mt-3">
+            <label class="col-2 col-form-label">Email</label>
+            <div class="col">
+
+                <input class="form-control" type="email" placeholder="Correo electrónico" formControlName="email" [class.is-invalid]="campoValido('email')">
+                <small *ngIf="campoValido('email')" class="text-danger">
+                Informe un correo con formato correcto.
+            </small>
+            </div>
+        </div>
+
+        <div class="form-group row mt-3">
+            <label class="col-2 col-form-label"></label>
+            <div class="col-3">
+
+                <input class="form-control" type="text" placeholder="Fecha Nacimiento" formControlName="fechaNacimiento" [class.is-invalid]="campoValido('fechaNacimiento')">
+                <small *ngIf="campoValido('fechaNacimiento')" class="text-danger">
+                Campo con formato no valido
+            </small>
+            </div>
+            <label class="col-1 col-form-label">DNI</label>
+            <div class="col-4">
+
+                <input class="form-control" type="text" placeholder="DNI" formControlName="dni" [class.is-invalid]="campoValido('dni')">
+                <small *ngIf="campoValido('dni')" class="text-danger">
+                Campo con formato erroneo
+            </small>
+            </div>
+        </div>
+        <div class="form-group row mt-3">
+            <label class="col-2 col-form-label">Matricula</label>
+            <div class="col-3">
+
+                <input class="form-control" type="text" placeholder="Numero de Matricula" formControlName="matricula" [class.is-invalid]="campoValido('matricula')">
+                <small *ngIf="campoValido('matricula')" class="text-danger">
+                Campo con formato no valido
+            </small>
+            </div>
+            <div class="col-3">
+
+                <input class="form-control" type="text" placeholder="Fecha de Matricula" formControlName="fechaMatricula" [class.is-invalid]="campoValido('fechaMatricula')">
+                <small *ngIf="campoValido('fechaMatricula')" class="text-danger">
+                Campo con formato no valido
+            </small>
+            </div>
+            <div class="col-2">
+                <select class="form-select custom-select" aria-label="Default select example" formControlName="ciclo" [class.is-invalid]="campoValido('ciclo')">
+                    <option  *ngFor="let ciclo of cicloEducativo | keyvalue"  value="{{ciclo.value}}">{{ciclo.value}}</option>
+                </select>
+                <small *ngIf="campoValido('ciclo')" class="text-danger">Elija un valor para el campo Ciclo</small>
+            </div>
+            <div class="col-2">
+
+                <input class="form-control" type="text" placeholder="Curso a matricular" formControlName="curso" (blur)="obtenerAsignaturasCicloCurso()" readonly>
+                <small *ngIf="campoValido('curso')" class="text-danger">
+                Campo con formato no valido
+            </small>
+            </div>
+        </div>
+
+        <div class="form-group mt-3" formGroupName="domicilio">
+            <div class="row">
+                <label class="col-2 col-form-label">Domicilio</label>
+                <div class="col-6">
+                    <input class="form-control" type="text" placeholder="Direccion" formControlName="direccion" [class.is-invalid]="campoValido('domicilio.direccion')">
+                    <small *ngIf="campoValido('domicilio.direccion')" class="text-danger">
+                    La direccion no es correcta
+                </small>
+                </div>
+                <div class="col-2">
+                    <input class="form-control" type="text" placeholder="Numero" formControlName="numero" [class.is-invalid]="campoValido('domicilio.numero')">
+                    <small *ngIf="campoValido('domicilio.numero')" class="text-danger">
+                    El numero no es correcto
+                </small>
+                </div>
+                <div class="col-2">
+                    <input class="form-control" type="text" placeholder="Planta" formControlName="planta" [class.is-invalid]="campoValido('domicilio.planta')">
+                    <small *ngIf="campoValido('domicilio.planta')" class="text-danger">
+                    El numero de planta no es correcta
+                </small>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row mt-3">
+            <label class="col-2 col-form-label">&nbsp;</label>
+            <div class="col-4">
+                <input class="form-control" type="text" placeholder="Localidad" formControlName="localidad" [class.is-invalid]="campoValido('localidad')">
+                <small *ngIf="campoValido('localidad')" class="text-danger">
+                    No es correcta la localidad
+                </small>
+            </div>
+            <div class="col-4">
+                <input class="form-control" type="text" placeholder="Provincia" formControlName="provincia" [class.is-invalid]="campoValido('provincia')">
+                <small *ngIf="campoValido('provincia')" class="text-danger">
+                    No es correcta la provincia introducida
+                </small>
+            </div>
+            <div class="col-2">
+                <input class="form-control" type="text" placeholder="Codigo Postal" formControlName="cPostal" [class.is-invalid]="campoValido('cPostal')">
+                <small *ngIf="campoValido('cPostal')" class="text-danger">
+                    El codigo Postal introducido no es correcto.
+                </small>
+            </div>
+        </div>
+        <!-- Formulario de alta de asignaturas por alumno -->
+        <div class="row m-5">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        Asignaturas Troncales
+                    </div>
+                    <div>
+                        <ng-select bindLabel="denminacion" bindValue="item" [multiple]="true" placeholder="Seleccione asignaturas" formArrayName="asignaturasTroncal" [(ngModel)]="arrayTroncalSelect" [ngModelOptions]="{standalone: true}" (blur)="getValuesT()">
+                            <ng-option [value]="item.id" *ngFor="let item of arrayTroncales">
+                                {{item.denominacion}}
+                            </ng-option>
+                        </ng-select>
+                        <p>
+                            Asignaturas Seleccionadas: {{arrayTroncalSelect}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        Asignaturas Opcionales
+                    </div>
+                    <div>
+                        <ng-select bindLabel="denminacion" bindValue="item" [multiple]="true" placeholder="Seleccione asignaturas" formArrayName="asignaturasOpcional" [(ngModel)]="arrayOpcionalSelect" [ngModelOptions]="{standalone: true}" (blur)="getValuesO()">
+                            <ng-option [value]="item.id" *ngFor="let item of arrayOpcionales">
+                                {{item.denominacion}}
+                            </ng-option>
+                        </ng-select>
+                        <p>
+                            Asignaturas Seleccionadas: {{arrayOpcionalSelect}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--div class="row">
+        <div class="col">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Id</th>
+                        <th>Hobby</th>
+                        <th>Borrar</th>
+                    </tr>
+                </thead>
+                <tbody formArrayName="hobis">
+                    <tr *ngFor="let control of hobbies.controls; let i=index">
+                        <td> {{ i + 1 }} </td>
+                        <td>
+                            <input class="form-control" type="text" [formControlName]="i">
+                        </td>
+                        <td>
+                            <button class="btn btn-danger" (click)="borrarHobi(i)">
+                                Borrar
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <button class="btn btn-primary btn-block mt-3 mb-5" type="button" (click)="agregarHobi()">
+                + Agregar
+            </button>
+        </div>
+        </div-->
+
+        <div class="form-group row mt-5">
+            <label class="col-10 col-form-label">&nbsp;</label>
+            <div class="input-group col">
+                <button type="submit" class="btn btn-outline-primary btn-block">
+                        Guardar
+                    </button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+
+<hr>
+<pre>
+    Estado del formulario: {{ forma.valid }}
+    <br>
+    Status: {{ forma.status}}
+</pre>
+
+<pre>
+
+    {{ forma.value | json}}
+
+</pre>
+
+<!--pre>
+    Asignaturas seleecionadas    
+    <ul>
+        <li *ngFor="let item of asignaturasT">
+            {{ item.id }}
+        </li>
+    </ul>
+</pre-->

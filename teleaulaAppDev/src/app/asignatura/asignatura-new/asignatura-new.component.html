@@ -1,0 +1,63 @@
+<div class="container">
+    <h4>FORMULARIO <small> Nuevo Asignatura </small></h4>
+    <hr>
+    <form autocomplete="off" [formGroup]="formAsignatura" (ngSubmit)="guardar()">
+        <div class="form-group row mt-3">
+            <label class="col-2 col-form-label">Denominacion</label>
+            <div class="col">
+
+                <input class="form-control" type="text" placeholder="Nombre Asignatura" formControlName="denominacion" [class.is-invalid]="campoValido('denominacion')">
+                <small *ngIf="campoValido('denominacion')" class="text-danger">Informe el campo correctamente</small>
+            </div>
+            <label class="col-2 col-form-label">Año Escolar</label>
+            <div class="col-2">
+                <input class="form-control" type="text" formControlName="anioEscolar" readonly>
+            </div>
+        </div>
+        <div class="form-group row mt-3">
+            <label class="col-2 col-form-label">Ciclo Educativo</label>
+            <div class="col-2">
+                <select class="form-select custom-select" aria-label="Default select example" formControlName="ciclo">
+                    <option  *ngFor="let ciclo of cicloEducativo | keyvalue"  value="{{ciclo.value}}">{{ciclo.value}}</option>
+                </select>
+                <small *ngIf="campoValido('ciclo')" class="text-danger">Elija un valor para el campo Ciclo</small>
+            </div>
+            <label class="col-1 col-form-label">Curso</label>
+            <div class="col-2">
+                <input class="form-control" type="text" placeHolder="Curso del ciclo" formControlName="curso" [class.is-invalid]="campoValido('curso')">
+                <small *ngIf="campoValido('curso')" class="text-danger">Introduzca valor para el curso</small>
+            </div>
+            <label class="col-2 col-form-label">Ambito asignatura</label>
+            <div class="col-3">
+                <select class="form-select custom-select" aria-label="Default select example" formControlName="tipo">
+                    <option  *ngFor="let tipo of tipoAsignatura | keyvalue"  value="{{tipo.value}}">{{tipo.value}}</option>
+                </select>
+                <small *ngIf="campoValido('tipo')" class="text-danger">Elija un valor para el campo Ambito Asignatura</small>
+            </div>
+
+        </div>
+        <div class="form-group row mt-3">
+            <label class="col-10 col-form-label">&nbsp;</label>
+            <div class="input-group col">
+                <button type="submit" class="btn btn-outline-primary btn-block">
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<hr>
+<hr>
+<pre>
+    Estado del formulario: {{ formAsignatura.valid }}
+    <br>
+    Status: {{ formAsignatura.status}}
+</pre>
+
+<pre>
+
+    {{ formAsignatura.value | json}}
+
+</pre>
